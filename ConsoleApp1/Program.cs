@@ -1,7 +1,7 @@
 ﻿using System;
 using ScriptBuilder;
 
-namespace ConsoleApp1
+namespace Main
 {
     class Program
     {
