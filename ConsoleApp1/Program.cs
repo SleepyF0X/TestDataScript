@@ -1,7 +1,7 @@
 ﻿using System;
 using ScriptBuilder;
 
-namespace Main
+namespace Startup
 {
     class Program
     {
