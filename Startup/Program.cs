@@ -7,7 +7,7 @@ namespace Startup
     {
         static void Main(string[] args)
         {
-            IScriptBuilder scriptBuilder = new EFCoreScriptBuilder(@"C:\Users\kotoh\Desktop\Names.txt", @"C:\Users\kotoh\Desktop\Surnames.txt");
+            IScriptBuilder scriptBuilder = new EfCoreScriptBuilder(@"C:\Users\kotoh\Desktop\Names.txt", @"C:\Users\kotoh\Desktop\Surnames.txt");
             Console.WriteLine(scriptBuilder.BuildScript(5));
         }
     }

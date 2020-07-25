@@ -6,17 +6,20 @@ using System.Text;
 
 namespace ScriptBuilder
 {
-    public class EFCoreScriptBuilder : IScriptBuilder
+    public class EfCoreScriptBuilder : IScriptBuilder
     {
-        private readonly string[] Names;
-        private readonly string[] Surnames;
+        private readonly string[] _names;
+
+        private readonly string[] _surnames;
+
         //private readonly string[] Emails;
-        public EFCoreScriptBuilder(string dataSourceName, string dataSourceSurname/*, string dataSourceEmail*/)
+        public EfCoreScriptBuilder(string dataSourceName, string dataSourceSurname /*, string dataSourceEmail*/)
         {
-            Names = File.ReadAllLines(dataSourceName);
-            Surnames = File.ReadAllLines(dataSourceSurname);
+            _names = File.ReadAllLines(dataSourceName);
+            _surnames = File.ReadAllLines(dataSourceSurname);
             //Emails = File.ReadAllLines(dataSourceEmail);
         }
+
         public string BuildScript(int stringCount)
         {
             List<string> ScriptSource = new List<string>();
@@ -24,16 +27,17 @@ namespace ScriptBuilder
             {
                 SQLModel model = GenerateModel();
                 ScriptSource.Add($"new DbProject " +
-                    $"{{ " +
-                    $"Id = Guid.NewGuid(), " +
-                    $"Name = \"{model.Name}\", " +
-                    $"Info = \"{model.Surname}\"" +
-                    //etc.
-                    $"}}");
+                                 $"{{ " +
+                                 $"Id = Guid.NewGuid(), " +
+                                 $"Name = \"{model.Name}\", " +
+                                 $"Info = \"{model.Surname}\"" +
+                                 //etc.
+                                 $"}}");
             }
-            var result = String.Join(", \n", ScriptSource);
-            string Script = "builder.Entity<DbProject>().HasData(" + result + "); ";
-            return Script;
+
+            var result = string.Join(", \n", ScriptSource);
+            var script = "builder.Entity<DbProject>().HasData(" + result + "); ";
+            return script;
         }
 
         public SQLModel GenerateModel()
@@ -41,8 +45,8 @@ namespace ScriptBuilder
             SQLModel model = new SQLModel
             {
                 Id = Guid.NewGuid(),
-                Name = Names[new Random().Next(Names.Length)],
-                Surname = Surnames[new Random().Next(Surnames.Length)],
+                Name = _names[new Random().Next(_names.Length)],
+                Surname = _surnames[new Random().Next(_surnames.Length)],
             };
             model.Email = model.Name + model.Surname + "@gmail.com";
             return model;
